@@ -1,0 +1,103 @@
+<head>
+  <title>wiki</title>
+</head>
+
+<body>
+ {{> header}}
+ {{> addNewDocumentModal}}
+ <div class="container top-margin">
+
+  <div class="row">
+    <div class="col-md-2">
+      {{> categories}}
+    </div>
+    <div class="col-md-10">
+      <h3>{{editor}}</h3>
+    </div>
+  </div>
+
+ </div>
+</body>
+
+<template name="header">
+  <nav class="navbar navbar-default navbar-fixed-top">
+  	<div class="container">
+  		<a class="navbar-brand" href="#">Wiki</a>
+      <ul class="nav navbar-nav">
+        <li>
+          <a href="#" class="add-new-document" data-toggle="modal" data-target="#new-document-modal">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+            New Document
+          </a>
+        </li>
+      </ul>
+   		<p class="navbar-text navbar-right">{{> loginButtons align="right"}}</p>
+  	</div>
+  </nav>
+</template>
+
+<template name="categories">
+<h2>Categories</h2>
+
+<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+  {{#each categories}}
+  <div class="panel panel-info">
+    <div class="panel-heading" role="tab" id="heading{{_id}}">
+      <h4 class="panel-title">
+        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse{{_id}}" aria-expanded="true" aria-controls="collapse{{_id}}">
+          {{category}}
+        </a>
+      </h4>
+    </div>
+    <div id="collapse{{_id}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading{{_id}}">
+      <div class="panel-body">
+        {{#each documents}}
+          <div class="panel panel-default">
+            <div class="panel-heading">{{title}}</div>
+          </div>
+        {{/each}}
+      </div>
+    </div>
+  </div>
+  {{/each}}
+</div>
+</template>
+
+
+<template name="addNewDocumentModal">
+  <div class="modal fade" id="new-document-modal" tabindex="-1" role="dialog" aria-labelledby="new-document-modal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Start a New Document</h4>
+        </div>
+        <form id="new-document">
+          <div class="modal-body">
+            <label for="documentTitle">Document Title</label>
+            <input type="text" name="documentTitle" class="form-control" placeholder="e.g. Plans for World Domination">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-success">Create Document</button>
+          </div>
+        </form> <!-- end #new-document -->
+      </div>
+    </div>
+  </div>
+</template>
+
+<template name="editor">
+  <header class="editor-header">
+    <label for="documentTitle">Title</label>
+    <input type="text" name="documentTitle">
+  </header>
+  <div class="editor-preview">
+    <div class="editor-wrap">
+      <textarea id="editor"></textarea>
+    </div>
+    <div class="preview-wrap">
+      <div id="preview"></div>
+    </div>
+  </div>
+</template>
