@@ -12,7 +12,7 @@
       {{> categories}}
     </div>
     <div class="col-md-10">
-      <h3>{{editor}}</h3>
+      {{> editor}}
     </div>
   </div>
 
@@ -72,10 +72,20 @@
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
           <h4 class="modal-title" id="myModalLabel">Start a New Document</h4>
         </div>
-        <form id="new-document">
+        <form id="new-document" class="js-add-doc">
           <div class="modal-body">
             <label for="documentTitle">Document Title</label>
             <input type="text" name="documentTitle" class="form-control" placeholder="e.g. Plans for World Domination">
+            <!-- drop down list -->
+            <div class="form-group">
+              <label class="control-label" for="category">Category</label>
+                <select id="category" class="form-control">
+                  {{#each categories}}
+                    <option>{{category}}</option>
+                  {{/each}}
+                </select> 
+            </div>
+          <!-- end drop down list -->
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
@@ -87,6 +97,7 @@
   </div>
 </template>
 
+<!--
 <template name="editor">
   <header class="editor-header">
     <label for="documentTitle">Title</label>
@@ -100,4 +111,11 @@
       <div id="preview"></div>
     </div>
   </div>
+</template>
+-->
+
+<template name="editor">
+
+  {{> CodeMirror id="editor" name="editor" options=editorOptions code=document reactiveVar="codeMirror"}}
+
 </template>

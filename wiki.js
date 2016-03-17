@@ -10,6 +10,7 @@ if (Meteor.isClient) {
 
   // categories helper
   Template.categories.helpers({
+    
     categories:function(){
       cat_curs = Categories.find();
       cat = cat_curs.fetch()
@@ -21,6 +22,56 @@ if (Meteor.isClient) {
       return cat;
     }
   });
+
+  Template.addNewDocumentModal.helpers({
+
+    categories:function(){
+      return Categories.find();
+    }
+  });
+
+  Template.editor.helpers({
+
+      "editorOptions": function() {
+          return {
+              lineNumbers: true,
+              lineWrapping: true,
+              mode: "markdown"
+          }
+      },
+
+      "document": function() {
+          return "Code to show in editor";
+      }
+  });
+
+  
+
+//////////////
+/// Events ///
+//////////////
+
+  Template.addNewDocumentModal.events({
+    'submit .js-add-doc':function(event){
+      event.preventDefault(); //stop a document from getting created when reload occurs
+      if (Meteor.userId()){
+        docTitle = event.target.documentTitle.value;
+        category = Categories.findOne({category:event.target.category.value});
+        if (category){
+          Documents.insert({title:docTitle, category:category._id});
+          $( '#new-document-modal' ).modal( 'hide' );
+          $( '.modal-backdrop' ).remove();
+        }
+      }
+      else{
+        console.log("failed");
+      }
+
+
+    }
+  })
+
+
 }
 
 
